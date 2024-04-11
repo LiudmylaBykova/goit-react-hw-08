@@ -1,11 +1,18 @@
 import css from "./Contact.module.css";
 import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contactsOps";
 import { BsFillPersonFill, BsFillTelephoneFill } from "react-icons/bs";
+import { apiDeleteContact } from "../../redux/contacts/slice";
 
 const Contact = ({ contact }) => {
   const dispatch = useDispatch();
-  const handleDelete = () => dispatch(deleteContact(contact.id));
+
+  const handleDelete = () => {
+    dispatch(apiDeleteContact(contact.id));
+  };
+
+  const handleEdit = () => {
+    // dispatch(apiDeleteContact(contact.id));
+  };
   return (
     <li>
       <div className={css.contactCard}>
@@ -22,6 +29,9 @@ const Contact = ({ contact }) => {
         </div>
         <button className={css.contactCardBtn} onClick={handleDelete}>
           Delete
+        </button>
+        <button className={css.contactCardBtn} onClick={handleEdit}>
+          Edit
         </button>
       </div>
     </li>
