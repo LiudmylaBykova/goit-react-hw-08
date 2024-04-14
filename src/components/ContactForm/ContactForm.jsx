@@ -33,7 +33,7 @@ const ContactForm = () => {
   const handleSubmit = (values, actions) => {
     dispatch(addNewContact(values));
     actions.resetForm();
-    toast(`Contact "${values.name}" added to phonebook!`, {
+    toast.success(`Contact "${values.name}" added to phonebook!`, {
       position: "top-right",
     });
   };

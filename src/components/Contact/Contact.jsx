@@ -4,7 +4,7 @@ import { BsFillPersonFill, BsFillTelephoneFill } from "react-icons/bs";
 import { IoTrashOutline } from "react-icons/io5";
 import { RiEdit2Fill } from "react-icons/ri";
 import { deleteContact, updateContact } from "../../redux/contacts/operations";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import DeleteContactDialog from "../DeleteContactDialog/DeleteContactDialog";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
@@ -25,9 +25,10 @@ const Contact = ({ contact }) => {
 
   const handleDelete = () => {
     dispatch(deleteContact(contact.id));
-    toast(`Contact "${contact.name}" has been deleted from phonebook!`, {
-      position: "top-right",
-    });
+    toast.success(
+      `Contact "${contact.name}" has been deleted from phonebook!`,
+      { position: "top-right" }
+    );
   };
 
   const handleOpenEditModal = () => {
@@ -36,7 +37,7 @@ const Contact = ({ contact }) => {
   const handleSave = () => {
     dispatch(updateContact(editedContact));
     setIsModalEditOpen(false);
-    toast("Contact has been updated!", {
+    toast.success(`Contact "${contact.name}" has been updated!`, {
       position: "top-right",
     });
   };
@@ -136,7 +137,6 @@ const Contact = ({ contact }) => {
           </div>
         </div>
       </Modal>
-      <Toaster />
     </>
   );
 };

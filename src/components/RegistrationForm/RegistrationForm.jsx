@@ -3,6 +3,7 @@ import { useId } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Box } from "@mui/material";
+import { toast } from "react-hot-toast";
 
 const UserRegisterSchema = Yup.object().shape({
   name: Yup.string()
@@ -34,6 +35,9 @@ const RegistrationForm = ({ onRegister }) => {
   const handleSubmit = (values, actions) => {
     onRegister(values);
     actions.resetForm();
+    toast.success(`"${values.name}", welcome to phonebook!`, {
+      position: "top-right",
+    });
   };
 
   return (
