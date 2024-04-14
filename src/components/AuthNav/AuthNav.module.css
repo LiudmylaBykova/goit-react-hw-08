@@ -1,0 +1,17 @@
+.navLink {
+    width: 110px;
+    height: 40px;
+    padding: 4px 12px;
+    color: #373636;
+    font-size: 22px;
+    font-weight: 600;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    transition: all .3s;
+}
+
+.active {
+    background-color: #afb2b8;
+}

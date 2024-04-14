@@ -1,67 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  requestGetCurrentUser,
-  requestLogOut,
-  requestSignIn,
-  requestSignUp,
-  setToken,
-} from "./operations";
-
-export const apiRegisterUser = createAsyncThunk(
-  "auth/register",
-  async (formData, thunkAPI) => {
-    try {
-      const data = await requestSignUp(formData);
-
-      return data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const apiLoginUser = createAsyncThunk(
-  "auth/login",
-  async (formData, thunkAPI) => {
-    try {
-      const data = await requestSignIn(formData);
-
-      return data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const apiRefreshUser = createAsyncThunk(
-  "auth/refresh",
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.auth.token;
-    setToken(token);
-    try {
-      const data = await requestGetCurrentUser();
-
-      return data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const apiLogoutUser = createAsyncThunk(
-  "auth/logout",
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    try {
-      await requestLogOut();
-
-      return;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
+import { createSlice } from "@reduxjs/toolkit";
+import { loginUser, logoutUser, refreshUser, registerUser } from "./operations";
 
 const INITIAL_STATE = {
   userData: null,
@@ -88,45 +26,45 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       //Regisrer
-      .addCase(apiRegisterUser.pending, handlePending)
-      .addCase(apiRegisterUser.fulfilled, (state, action) => {
+      .addCase(registerUser.pending, handlePending)
+      .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userData = action.payload.user;
         state.token = action.payload.token;
         state.isSignedIn = true;
       })
-      .addCase(apiRegisterUser.rejected, handleRejected)
+      .addCase(registerUser.rejected, handleRejected)
 
       //Login
-      .addCase(apiLoginUser.pending, handlePending)
-      .addCase(apiLoginUser.fulfilled, (state, action) => {
+      .addCase(loginUser.pending, handlePending)
+      .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userData = action.payload.user;
         state.token = action.payload.token;
         state.isSignedIn = true;
       })
-      .addCase(apiLoginUser.rejected, handleRejected)
+      .addCase(loginUser.rejected, handleRejected)
 
       //Refresh
-      .addCase(apiRefreshUser.pending, (state) => {
+      .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
         state.isError = false;
       })
-      .addCase(apiRefreshUser.fulfilled, (state, action) => {
+      .addCase(refreshUser.fulfilled, (state, action) => {
         state.isRefreshing = false;
         state.userData = action.payload;
         state.isSignedIn = true;
       })
-      .addCase(apiRefreshUser.rejected, (state) => {
+      .addCase(refreshUser.rejected, (state) => {
         state.isRefreshing = false;
         state.isError = true;
       })
       //Logout
-      .addCase(apiLogoutUser.pending, handlePending)
-      .addCase(apiLogoutUser.fulfilled, () => {
+      .addCase(logoutUser.pending, handlePending)
+      .addCase(logoutUser.fulfilled, () => {
         return INITIAL_STATE;
       })
-      .addCase(apiLogoutUser.rejected, handleRejected);
+      .addCase(logoutUser.rejected, handleRejected);
   },
 });
 

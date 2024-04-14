@@ -14,6 +14,11 @@
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
 }
 
+.cardIconPerson {
+    vertical-align: middle;
+    color: hsl(216, 2%, 53%);
+    margin-right: 10px;
+}
 
 .cardIcon {
     vertical-align: middle;
@@ -21,21 +26,77 @@
     margin-right: 10px;
 }
 
+.cardIcon:hover,
+.cardIcon:focus {
+    color: rgb(77, 78, 78);
+}
+
 .cardText {
     font-size: 20px;
     font-weight: 500;
 }
 
+.btnWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .contactCardBtn {
+    font-size: 24px;
+    background-color: transparent;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+.modalFormWrap {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 40px 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    border: 1px solid #d7d8db;
+    background-color: #EEEFF3;
+    margin: 100px auto;
+}
+
+.modalInput {
+    width: 310px;
     font-size: 16px;
-    width: 60px;
-    height: 35px;
+    height: 25px;
+    padding: 8px 16px;
+    outline: none;
+    border: 1px solid #afb2b8;
     border-radius: 4px;
+    transition: box-shadow 0.3s ease-in-out;
+    margin-bottom: 15px;
+}
+
+.modalInput:hover,
+.modalInput:focus {
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.buttonContainerModal {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.modalBtn {
+    font-size: 16px;
+    width: 140px;
+    height: 40px;
+    border-radius: 4px;
+    margin-top: 30px;
     background-color: #afb2b8;
     transition: background-color 0.3s ease-in-out;
 }
 
-.contactCardBtn:hover,
-.contactCardBtn:focus {
+.modalBtn:hover,
+.modalBtn:focus {
     background-color: hsl(216, 2%, 53%);
 }

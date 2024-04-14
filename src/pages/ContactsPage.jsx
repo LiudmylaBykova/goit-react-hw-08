@@ -10,7 +10,9 @@ import {
   selectIsError,
   selectIsLoading,
 } from "../redux/contacts/selectors";
-import { apiAddNewContact, apiGetUserContacts } from "../redux/contacts/slice";
+import { getUserContacts } from "../redux/contacts/operations";
+import Container from "@mui/material/Container";
+import { Typography } from "@mui/material";
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -18,18 +20,20 @@ const ContactsPage = () => {
   const isError = useSelector(selectIsError);
 
   useEffect(() => {
-    dispatch(apiGetUserContacts());
+    dispatch(getUserContacts());
   }, [dispatch]);
 
   return (
-    <div>
-      <h1>Phonebook</h1>
+    <Container maxWidth="lg">
+      <Typography variant="h4" sx={{ mb: 2, mt: 4 }}>
+        Phonebook
+      </Typography>
       <ContactForm />
       <SearchBox />
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
       {!isLoading && !isError && <ContactList />}
-    </div>
+    </Container>
   );
 };
 

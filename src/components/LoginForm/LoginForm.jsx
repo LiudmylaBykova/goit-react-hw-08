@@ -2,6 +2,7 @@ import css from "./LoginForm.module.css";
 import { useId } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { Box } from "@mui/material";
 // import { useDispatch } from "react-redux";
 
 const UserLoginSchema = Yup.object().shape({
@@ -31,41 +32,47 @@ const LoginForm = ({ onLogin }) => {
   };
 
   return (
-    <Formik
-      initialValues={INITIAL_FORM_DATA}
-      onSubmit={handleSubmit}
-      validationSchema={UserLoginSchema}
-    >
-      <Form className={css.form}>
-        <div className={css.label}>
-          <label htmlFor={emailFieldId}>Email</label>
-          <Field
-            className={css.input}
-            type="email"
-            name="email"
-            placeholder="jackwilson@gmail.com"
-            id={emailFieldId}
-          />
-          <ErrorMessage className={css.error} name="email" component="div" />
-        </div>
+    <Box sx={{ mt: 4 }}>
+      <Formik
+        initialValues={INITIAL_FORM_DATA}
+        onSubmit={handleSubmit}
+        validationSchema={UserLoginSchema}
+      >
+        <Form className={css.form}>
+          <div className={css.label}>
+            <label htmlFor={emailFieldId}>Email</label>
+            <Field
+              className={css.input}
+              type="email"
+              name="email"
+              placeholder="jackwilson@gmail.com"
+              id={emailFieldId}
+            />
+            <ErrorMessage className={css.error} name="email" component="div" />
+          </div>
 
-        <div className={css.label}>
-          <label htmlFor={passwordFieldId}>Password</label>
-          <Field
-            className={css.input}
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            id={passwordFieldId}
-          />
-          <ErrorMessage className={css.error} name="password" component="div" />
-        </div>
+          <div className={css.label}>
+            <label htmlFor={passwordFieldId}>Password</label>
+            <Field
+              className={css.input}
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              id={passwordFieldId}
+            />
+            <ErrorMessage
+              className={css.error}
+              name="password"
+              component="div"
+            />
+          </div>
 
-        <button className={css.btn} type="submit">
-          Sign In
-        </button>
-      </Form>
-    </Formik>
+          <button className={css.btn} type="submit">
+            Sign In
+          </button>
+        </Form>
+      </Formik>
+    </Box>
   );
 };
 

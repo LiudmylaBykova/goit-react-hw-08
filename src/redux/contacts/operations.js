@@ -1,28 +1,72 @@
-// import axios from "axios";
-import { instance } from "../auth/operations";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  requestAddNewContact,
+  requestDeleteContact,
+  requestGetUserContacts,
+  requestUpdateContact,
+} from "../../service";
+import axios from "axios";
 
-export const setToken = (token) => {
-  instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
+export const getUserContacts = createAsyncThunk(
+  "contacts/get",
+  async (_, thunkAPI) => {
+    try {
+      const data = await requestGetUserContacts();
 
-export const clearToken = (token) => {
-  instance.defaults.headers.common.Authorization = "";
-};
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
 
-export const requestGetUserContacts = async () => {
-  const { data } = await instance.get("/contacts");
+export const addNewContact = createAsyncThunk(
+  "contacts/add",
+  async (formData, thunkAPI) => {
+    try {
+      const data = await requestAddNewContact(formData);
 
-  return data;
-};
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
 
-export const requestAddNewContact = async (formData) => {
-  const { data } = await instance.post("/contacts", formData);
+export const deleteContact = createAsyncThunk(
+  "contacts/delete",
+  async (userId, thunkAPI) => {
+    try {
+      const data = await requestDeleteContact(userId);
 
-  return data;
-};
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
 
-export const requestDeleteContact = async (contactId) => {
-  const { data } = await instance.delete(`/contacts/${contactId}`);
+export const updateContact = createAsyncThunk(
+  "phonebook/update",
+  async (editedContact, thunkAPI) => {
+    try {
+      const data = await requestUpdateContact(editedContact);
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
 
-  return data;
-};
+// export const updateContact = createAsyncThunk(
+//   "contacts/update",
+//   async (userData, thunkAPI) => {
+//     try {
+//       const data = await requesUpdateContact(userData);
+
+//       return data;
+//     } catch (e) {
+//       return thunkAPI.rejectWithValue(e.message);
+//     }
+//   }
+// );

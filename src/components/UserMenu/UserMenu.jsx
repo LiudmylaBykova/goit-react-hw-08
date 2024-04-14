@@ -1,21 +1,24 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserData } from "../../redux/auth/selectors";
-import { apiLogoutUser } from "../../redux/auth/slice";
+import { logoutUser } from "../../redux/auth/operations";
+import { Box } from "@mui/material";
+import { Typography } from "@mui/material";
+import css from "./UserMenu.module.css";
 
 const UserMenu = () => {
   const userData = useSelector(selectUserData);
   const dispatch = useDispatch();
 
   const onLogOut = () => {
-    dispatch(apiLogoutUser());
+    dispatch(logoutUser());
   };
   return (
-    <div>
-      <p>Hello, {userData.name}!</p>
-      <button type="button" onClick={onLogOut}>
-        Logut
+    <Box sx={{ display: "flex", alignItems: "center", gap: "36px" }}>
+      <Typography sx={{ ml: "auto" }}>Welcome, {userData.name}!</Typography>
+      <button className={css.btn} type="button" onClick={onLogOut}>
+        Logout
       </button>
-    </div>
+    </Box>
   );
 };
 

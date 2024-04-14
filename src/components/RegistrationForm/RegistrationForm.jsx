@@ -2,7 +2,7 @@ import css from "./RegistrationForm.module.css";
 import { useId } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { Box } from "@mui/material";
 
 const UserRegisterSchema = Yup.object().shape({
   name: Yup.string()
@@ -30,7 +30,6 @@ const RegistrationForm = ({ onRegister }) => {
   const nameFieldId = useId();
   const emailFieldId = useId();
   const passwordFieldId = useId();
-  //   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
     onRegister(values);
@@ -38,53 +37,59 @@ const RegistrationForm = ({ onRegister }) => {
   };
 
   return (
-    <Formik
-      initialValues={INITIAL_FORM_DATA}
-      onSubmit={handleSubmit}
-      validationSchema={UserRegisterSchema}
-    >
-      <Form className={css.form}>
-        <div className={css.label}>
-          <label htmlFor={nameFieldId}>Name</label>
-          <Field
-            className={css.input}
-            type="text"
-            name="name"
-            placeholder="Jack Wilson"
-            id={nameFieldId}
-          />
-          <ErrorMessage className={css.error} name="name" component="div" />
-        </div>
+    <Box sx={{ mt: 4 }}>
+      <Formik
+        initialValues={INITIAL_FORM_DATA}
+        onSubmit={handleSubmit}
+        validationSchema={UserRegisterSchema}
+      >
+        <Form className={css.form}>
+          <div className={css.label}>
+            <label htmlFor={nameFieldId}>Name</label>
+            <Field
+              className={css.input}
+              type="text"
+              name="name"
+              placeholder="Jack Wilson"
+              id={nameFieldId}
+            />
+            <ErrorMessage className={css.error} name="name" component="div" />
+          </div>
 
-        <div className={css.label}>
-          <label htmlFor={emailFieldId}>Email</label>
-          <Field
-            className={css.input}
-            type="email"
-            name="email"
-            placeholder="jackwilson@gmail.com"
-            id={emailFieldId}
-          />
-          <ErrorMessage className={css.error} name="email" component="div" />
-        </div>
+          <div className={css.label}>
+            <label htmlFor={emailFieldId}>Email</label>
+            <Field
+              className={css.input}
+              type="email"
+              name="email"
+              placeholder="jackwilson@gmail.com"
+              id={emailFieldId}
+            />
+            <ErrorMessage className={css.error} name="email" component="div" />
+          </div>
 
-        <div className={css.label}>
-          <label htmlFor={passwordFieldId}>Password</label>
-          <Field
-            className={css.input}
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            id={passwordFieldId}
-          />
-          <ErrorMessage className={css.error} name="password" component="div" />
-        </div>
+          <div className={css.label}>
+            <label htmlFor={passwordFieldId}>Password</label>
+            <Field
+              className={css.input}
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              id={passwordFieldId}
+            />
+            <ErrorMessage
+              className={css.error}
+              name="password"
+              component="div"
+            />
+          </div>
 
-        <button className={css.btn} type="submit">
-          Sign Up
-        </button>
-      </Form>
-    </Formik>
+          <button className={css.btn} type="submit">
+            Sign Up
+          </button>
+        </Form>
+      </Formik>
+    </Box>
   );
 };
 

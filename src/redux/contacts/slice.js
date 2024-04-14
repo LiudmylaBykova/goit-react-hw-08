@@ -1,48 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
-  requestAddNewContact,
-  requestDeleteContact,
-  requestGetUserContacts,
+  addNewContact,
+  deleteContact,
+  getUserContacts,
+  updateContact,
 } from "./operations";
-
-export const apiGetUserContacts = createAsyncThunk(
-  "contacts/get",
-  async (_, thunkAPI) => {
-    try {
-      const data = await requestGetUserContacts();
-
-      return data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const apiAddNewContact = createAsyncThunk(
-  "contacts/add",
-  async (formData, thunkAPI) => {
-    try {
-      const data = await requestAddNewContact(formData);
-
-      return data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const apiDeleteContact = createAsyncThunk(
-  "contacts/delete",
-  async (userId, thunkAPI) => {
-    try {
-      const data = await requestDeleteContact(userId);
-
-      return data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
 
 const initialState = {
   contacts: [],
@@ -66,33 +28,44 @@ const contactsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       //get
-      .addCase(apiGetUserContacts.pending, handlePending)
-      .addCase(apiGetUserContacts.fulfilled, (state, action) => {
+      .addCase(getUserContacts.pending, handlePending)
+      .addCase(getUserContacts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = null;
         state.contacts = action.payload;
       })
-      .addCase(apiGetUserContacts.rejected, handleRejected);
+      .addCase(getUserContacts.rejected, handleRejected)
 
-    //add
-    // .addCase(apiAddNewContact.pending, handlePending)
-    // .addCase(apiAddNewContact.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   state.isError = null;
-    //   state.contacts = [...state.contacts, action.payload];
-    // })
-    // .addCase(apiAddNewContact.rejected, handleRejected)
+      //add
+      .addCase(addNewContact.pending, handlePending)
+      .addCase(addNewContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = null;
+        state.contacts = [...state.contacts, action.payload];
+      })
+      .addCase(addNewContact.rejected, handleRejected)
 
-    //delete
-    // .addCase(apiDeleteContact.pending, handlePending)
-    // .addCase(apiDeleteContact.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   state.isError = null;
-    //   state.contacts = state.contacts.filter(
-    //     (contact) => contact.id !== action.payload.id
-    //   );
-    // })
-    // .addCase(apiDeleteContact.rejected, handleRejected);
+      //delete
+      .addCase(deleteContact.pending, handlePending)
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = null;
+        state.contacts = state.contacts.filter(
+          (contact) => contact.id !== action.payload.id
+        );
+      })
+      .addCase(deleteContact.rejected, handleRejected)
+      //
+      .addCase(updateContact.pending, handlePending)
+      .addCase(updateContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = null;
+        const index = state.contacts.findIndex(
+          (contact) => contact.id === action.payload.id
+        );
+        state.contacts[index] = action.payload;
+      })
+      .addCase(updateContact.rejected, handleRejected);
   },
 });
 

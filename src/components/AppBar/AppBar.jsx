@@ -3,14 +3,19 @@ import UserMenu from "../UserMenu/UserMenu";
 import AuthNav from "../AuthNav/AuthNav";
 import { selectUserIsSignedIn } from "../../redux/auth/selectors";
 import { useSelector } from "react-redux";
+import css from "./AppBar.module.css";
+import Toolbar from "@mui/material/Toolbar";
+import { Container } from "@mui/material";
 
 const AppBar = () => {
   const isSignedIn = useSelector(selectUserIsSignedIn);
   return (
-    <header>
-      <Navigation />
-      {isSignedIn ? <UserMenu /> : <AuthNav />}
-    </header>
+    <Container maxWidth="lg">
+      <Toolbar sx={{ bgcolor: "#EEEFF3", gap: 60 }}>
+        <Navigation />
+        {isSignedIn ? <UserMenu /> : <AuthNav />}
+      </Toolbar>
+    </Container>
   );
 };
 export default AppBar;

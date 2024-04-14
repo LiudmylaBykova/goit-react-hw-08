@@ -2,11 +2,11 @@ import "./App.css";
 import { lazy, useEffect } from "react";
 import { Route, Routes } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { apiRefreshUser } from "./redux/auth/slice";
 import { Layout } from "./components/Layout";
 import { selectUserIsRefreshing } from "./redux/auth/selectors";
 import { RestrictedRoute } from "./components/RestrictedRoute";
 import { PrivateRoute } from "./components/PrivateRoute";
+import { refreshUser } from "./redux/auth/operations";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const RegistrationPage = lazy(() => import("./pages/RegistrationPage"));
@@ -18,7 +18,7 @@ export default function App() {
   const { isRefreshing } = useSelector(selectUserIsRefreshing);
 
   useEffect(() => {
-    dispatch(apiRefreshUser());
+    dispatch(refreshUser());
   }, [dispatch]);
 
   return isRefreshing ? (

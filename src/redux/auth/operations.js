@@ -1,38 +1,72 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  requestGetCurrentUser,
+  requestLogOut,
+  requestSignIn,
+  requestSignUp,
+  setToken,
+} from "../../service";
 
-export const instance = axios.create({
-  baseURL: "https://connections-api.herokuapp.com",
-});
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  async (formData, thunkAPI) => {
+    try {
+      const data = await requestSignUp(formData);
 
-export const setToken = (token) => {
-  instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
 
-export const clearToken = (token) => {
-  instance.defaults.headers.common.Authorization = "";
-};
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async (formData, thunkAPI) => {
+    try {
+      const data = await requestSignIn(formData);
 
-export const requestSignUp = async (formData) => {
-  const { data } = await instance.post("/users/signup", formData);
-  setToken(data.token);
-  return data;
-};
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
 
-export const requestSignIn = async (formData) => {
-  const { data } = await instance.post("/users/login", formData);
-  setToken(data.token);
-  return data;
-};
+export const refreshUser = createAsyncThunk(
+  "auth/refresh",
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+    setToken(token);
+    try {
+      const data = await requestGetCurrentUser();
 
-export const requestGetCurrentUser = async () => {
-  const { data } = await instance.get("/users/current");
+      return data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  },
+  {
+    condition: (_, thunkAPI) => {
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
+      if (!token) return false;
+      return true;
+    },
+  }
+);
 
-  return data;
-};
+export const logoutUser = createAsyncThunk(
+  "auth/logout",
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    try {
+      await requestLogOut();
 
-export const requestLogOut = async () => {
-  const { data } = await instance.post("/users/logout");
-
-  return data;
-};
+      return;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);

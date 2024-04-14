@@ -1,17 +1,22 @@
 import { useDispatch } from "react-redux";
-import { apiLoginUser } from "../redux/auth/slice";
 import LoginForm from "../components/LoginForm/LoginForm";
+import { loginUser } from "../redux/auth/operations";
+import Container from "@mui/material/Container";
+import { Typography } from "@mui/material";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const onLogin = (formData) => {
-    dispatch(apiLoginUser(formData));
+    dispatch(loginUser(formData));
   };
 
   return (
-    <div>
+    <Container maxWidth="lg">
+      <Typography variant="h4" sx={{ mb: 2, mt: 4 }}>
+        Login form
+      </Typography>
       <LoginForm onLogin={onLogin} />
-    </div>
+    </Container>
   );
 };
 
