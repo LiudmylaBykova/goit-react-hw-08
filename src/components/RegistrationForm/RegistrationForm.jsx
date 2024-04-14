@@ -3,7 +3,8 @@ import { useId } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Box } from "@mui/material";
-import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../redux/auth/operations";
 
 const UserRegisterSchema = Yup.object().shape({
   name: Yup.string()
@@ -27,17 +28,15 @@ const INITIAL_FORM_DATA = {
   password: "",
 };
 
-const RegistrationForm = ({ onRegister }) => {
+const RegistrationForm = () => {
   const nameFieldId = useId();
   const emailFieldId = useId();
   const passwordFieldId = useId();
+  const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    onRegister(values);
+    dispatch(registerUser(values));
     actions.resetForm();
-    toast.success(`"${values.name}", welcome to phonebook!`, {
-      position: "top-right",
-    });
   };
 
   return (

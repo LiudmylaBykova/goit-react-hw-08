@@ -3,7 +3,9 @@ import { useId } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Box } from "@mui/material";
-// import { useDispatch } from "react-redux";
+import { Toaster, toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../redux/auth/operations";
 
 const UserLoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,12 +24,21 @@ const INITIAL_FORM_DATA = {
   password: "",
 };
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = () => {
   const emailFieldId = useId();
   const passwordFieldId = useId();
+  const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    onLogin(values);
+    dispatch(loginUser(values))
+      .then(() => {
+        toast.success(`"${values.name}", welcome to your phonebook!`, {
+          position: "top-right",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     actions.resetForm();
   };
 
@@ -72,6 +83,7 @@ const LoginForm = ({ onLogin }) => {
           </button>
         </Form>
       </Formik>
+      <Toaster />
     </Box>
   );
 };

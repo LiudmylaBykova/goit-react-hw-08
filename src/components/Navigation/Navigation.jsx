@@ -13,7 +13,7 @@ const Navigation = () => {
     });
   };
   return (
-    <Box sx={{ display: "flex", gap: "36px" }}>
+    <Box sx={{ display: "flex", gap: "36px", mr: "auto" }}>
       <NavLink className={getNavLinkClassName} to="/">
         Home
       </NavLink>

@@ -11,7 +11,7 @@ const AppBar = () => {
   const isSignedIn = useSelector(selectUserIsSignedIn);
   return (
     <Container maxWidth="lg">
-      <Toolbar sx={{ bgcolor: "#EEEFF3", gap: 60 }}>
+      <Toolbar sx={{ display: "flex", bgcolor: "#EEEFF3" }}>
         <Navigation />
         {isSignedIn ? <UserMenu /> : <AuthNav />}
       </Toolbar>
