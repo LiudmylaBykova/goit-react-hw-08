@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { Box } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../redux/auth/operations";
+import toast, { Toaster } from "react-hot-toast";
 
 const UserRegisterSchema = Yup.object().shape({
   name: Yup.string()
@@ -34,9 +35,16 @@ const RegistrationForm = () => {
   const passwordFieldId = useId();
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, actions) => {
-    dispatch(registerUser(values));
-    actions.resetForm();
+  const handleSubmit = async (values, actions) => {
+    try {
+      dispatch(registerUser(values));
+      toast.success(`${values.name}, thank you for joing!`, {
+        position: "top-right",
+      });
+      actions.resetForm();
+    } catch (error) {
+      toast.error("Failed to registration");
+    }
   };
 
   return (
@@ -92,6 +100,7 @@ const RegistrationForm = () => {
           </button>
         </Form>
       </Formik>
+      <Toaster />
     </Box>
   );
 };

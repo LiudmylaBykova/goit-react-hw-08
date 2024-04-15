@@ -30,12 +30,16 @@ const ContactForm = () => {
   const numberFieldId = useId();
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, actions) => {
-    dispatch(addNewContact(values));
-    actions.resetForm();
-    toast.success(`Contact "${values.name}" added to phonebook!`, {
-      position: "top-right",
-    });
+  const handleSubmit = async (values, actions) => {
+    try {
+      dispatch(addNewContact(values));
+      toast.success(`Contact "${values.name}" added to phonebook!`, {
+        position: "top-right",
+      });
+      actions.resetForm();
+    } catch (error) {
+      toast.error("Failed to add contact");
+    }
   };
 
   return (

@@ -3,7 +3,7 @@ import { useId } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Box } from "@mui/material";
-import { Toaster, toast } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../redux/auth/operations";
 
@@ -29,17 +29,16 @@ const LoginForm = () => {
   const passwordFieldId = useId();
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, actions) => {
-    dispatch(loginUser(values))
-      .then(() => {
-        toast.success(`"${values.name}", welcome to your phonebook!`, {
-          position: "top-right",
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+  const handleSubmit = async (values, actions) => {
+    try {
+      dispatch(loginUser(values));
+      toast.success("Welcome in your phonebook!", {
+        position: "top-right",
       });
-    actions.resetForm();
+      actions.resetForm();
+    } catch (error) {
+      toast.error("Failed to login");
+    }
   };
 
   return (

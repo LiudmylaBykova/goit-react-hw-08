@@ -15,7 +15,7 @@ const ContactList = () => {
           ))}
         </ul>
       ) : (
-        <p className={css.contactInfo}>No contacts in your contact list!</p>
+        <p className={css.contactInfo}>No contacts in your phonebook!</p>
       )}
     </Box>
   );
