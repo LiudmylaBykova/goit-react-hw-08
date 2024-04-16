@@ -53,18 +53,11 @@ const Contact = ({ contact }) => {
     <>
       <li>
         <div className={css.contactCard}>
-          <div>
+          <div className={css.person}>
             <p className={css.cardText}>
               <BsFillPersonFill className={css.cardIconPerson} />
               {contact.name}
             </p>
-
-            <p className={css.cardText}>
-              <BsFillTelephoneFill className={css.cardIconPerson} />
-              {contact.number}
-            </p>
-          </div>
-          <div className={css.btnWrap}>
             <button
               className={css.contactCardBtn}
               onClick={handleClickOpenDialog}
@@ -72,6 +65,13 @@ const Contact = ({ contact }) => {
             >
               <IoTrashOutline className={css.cardIcon} />
             </button>
+          </div>
+
+          <div className={css.person}>
+            <p className={css.cardText}>
+              <BsFillTelephoneFill className={css.cardIconPerson} />
+              {contact.number}
+            </p>
             <button
               className={css.contactCardBtn}
               onClick={handleOpenEditModal}

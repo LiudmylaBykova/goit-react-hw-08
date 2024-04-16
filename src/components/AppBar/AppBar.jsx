@@ -3,7 +3,6 @@ import UserMenu from "../UserMenu/UserMenu";
 import AuthNav from "../AuthNav/AuthNav";
 import { selectUserIsSignedIn } from "../../redux/auth/selectors";
 import { useSelector } from "react-redux";
-import css from "./AppBar.module.css";
 import Toolbar from "@mui/material/Toolbar";
 import { Container } from "@mui/material";
 
