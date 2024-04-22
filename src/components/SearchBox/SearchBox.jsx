@@ -11,7 +11,7 @@ const SearchBox = () => {
     <Box>
       <div className={css.searchWrap}>
         <label>
-          Find contact by name
+          Find contact by name or number
           <input
             className={css.searchInput}
             type="text"

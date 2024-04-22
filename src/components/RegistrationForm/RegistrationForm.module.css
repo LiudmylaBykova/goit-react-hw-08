@@ -4,7 +4,7 @@
     flex-direction: column;
     gap: 15px;
     padding: 40px 20px;
-    margin-bottom: 30px;
+    margin: 100px auto 30px;
     border-radius: 8px;
     border: 1px solid #d7d8db;
     background-color: #EEEFF3;
@@ -41,6 +41,7 @@
     height: 40px;
     border-radius: 4px;
     margin-top: 30px;
+    margin-left: auto;
     background-color: #afb2b8;
     transition: background-color 0.3s ease-in-out;
 }
